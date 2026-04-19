@@ -623,6 +623,12 @@ def _get_permissions(user):
         'open-shift': ["Sales User", 'Sales Manager', 'System Manager'],
         'create-printer': ['System Manager', 'Sales Manager'],
         'create-receipt-layout': ['System Manager', 'Sales Manager'],
+        'view-purchase-receipt': ['Purchase User', 'Purchase Manager', 'System Manager'],
+        'create-purchase-receipt': ['Purchase Manager', 'System Manager'],
+        'view-stock-reconciliation': ['Stock User', 'System Manager'],
+        'create-stock-reconciliation': ['Stock Manager', 'System Manager'],
+        'view-stock-transfer': ['Stock User', 'System Manager'],
+        'create-stock-transfer': ['Stock Manager', 'System Manager'],
     }
 
     for perm, allowed_roles in role_map.items():

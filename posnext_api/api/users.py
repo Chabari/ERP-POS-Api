@@ -31,7 +31,7 @@ def get_user_profile_data(start_date=None, end_date=None):
     sales = frappe.get_all(
         "Sales Invoice",
         filters=filters,
-        fields=[{"SUM": "grand_total", "as": "total"}],
+        fields=["sum(grand_total) as total"],
     )
     if sales and sales[0].get("total"):
         total_sales = flt(sales[0]["total"])
@@ -40,7 +40,7 @@ def get_user_profile_data(start_date=None, end_date=None):
     pos_sales = frappe.get_all(
         "POS Invoice",
         filters=filters,
-        fields=[{"SUM": "grand_total", "as": "total"}],
+        fields=["sum(grand_total) as total"],
     )
     if pos_sales and pos_sales[0].get("total"):
         total_sales += flt(pos_sales[0]["total"])

@@ -28,10 +28,46 @@ def get_item_groups():
 
 @frappe.whitelist()
 def get_users():
-    """Return system users matching PosNext UsersList format."""
+    """Return system users matching PosNext UsersList format.
+
+    If the current user has the Sales Manager role, all system users are returned.
+    Otherwise, only users linked to the same POS Profile as the current user are returned.
+    """
+    current_user = frappe.session.user
+    current_user_roles = frappe.get_roles(current_user)
+
+    if "Sales Manager" in current_user_roles:
+        user_filters = {"enabled": 1}
+    else:
+        # Find POS Profiles the current user is linked to
+        pos_profiles = frappe.get_all(
+            "POS Profile User",
+            filters={"user": current_user},
+            fields=["parent"],
+        )
+        if pos_profiles:
+            profile_names = [p.parent for p in pos_profiles]
+            # Get all users linked to those POS Profiles
+            pos_users = frappe.get_all(
+                "POS Profile User",
+                filters={"parent": ["in", profile_names]},
+                fields=["user"],
+            )
+            allowed_users = list({pu.user for pu in pos_users})
+            user_filters = {
+                "enabled": 1,
+                "name": ["in", allowed_users],
+            }
+        else:
+            # No POS Profile linked — return only the current user
+            user_filters = {
+                "enabled": 1,
+                "name": current_user,
+            }
+
     users = frappe.get_all(
         "User",
-        filters={"enabled": 1, "user_type": "System User"},
+        filters=user_filters,
         fields=["name", "full_name", "email", "phone", "creation"],
         order_by="full_name asc",
     )

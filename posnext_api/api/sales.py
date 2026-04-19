@@ -178,7 +178,12 @@ def check_shift(warehouse=None):
         ["name"],
     )
     if open_entry:
-        return {"success": "1", "shift": open_entry, "message": "Shift found"}
+        customer = frappe.db.get_value(
+            "POS Opening Shift",
+            {"name": open_entry},
+            ["customer"],
+        )
+        return {"success": "1", "shift": open_entry, "customer": customer, "message": "Shift found"}
 
     # 2. Check for an open shift created by any other applicable user
     applicable_users = _get_applicable_users(pos_profile)
@@ -190,7 +195,12 @@ def check_shift(warehouse=None):
             ["name"],
         )
         if shared_entry:
-            return {"success": "1", "shift": shared_entry,
+            customer = frappe.db.get_value(
+                "POS Opening Shift",
+                {"name": shared_entry},
+                ["customer"],
+            )
+            return {"success": "1", "shift": shared_entry, "customer": customer,
                     "message": "Shift found"}
 
     # 3. Check if there is an unreconciled POS Closing Shift (by user or
