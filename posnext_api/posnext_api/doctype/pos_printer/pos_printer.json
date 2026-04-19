@@ -1,0 +1,123 @@
+{
+  "actions": [],
+  "autoname": "autoincrement",
+  "creation": "2026-04-18 00:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "printer_name",
+    "address",
+    "port",
+    "connection_type",
+    "printer_size",
+    "warehouse",
+    "is_default",
+    "printer_warehouse",
+    "printer_location",
+    "printer_email",
+    "printer_phone"
+  ],
+  "fields": [
+    {
+      "fieldname": "printer_name",
+      "fieldtype": "Data",
+      "label": "Printer Name",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "address",
+      "fieldtype": "Data",
+      "label": "Address",
+      "description": "IP address or Bluetooth MAC address"
+    },
+    {
+      "fieldname": "port",
+      "fieldtype": "Data",
+      "label": "Port",
+      "default": "9100"
+    },
+    {
+      "fieldname": "connection_type",
+      "fieldtype": "Select",
+      "label": "Connection Type",
+      "options": "Network\nBluetooth",
+      "default": "Network",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "printer_size",
+      "fieldtype": "Select",
+      "label": "Paper Size",
+      "options": "58 mm\n80 mm",
+      "default": "80 mm"
+    },
+    {
+      "fieldname": "warehouse",
+      "fieldtype": "Link",
+      "label": "Warehouse",
+      "options": "Warehouse",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "is_default",
+      "fieldtype": "Check",
+      "label": "Is Default",
+      "default": 0
+    },
+    {
+      "fieldname": "printer_warehouse",
+      "fieldtype": "Data",
+      "label": "Printer Warehouse Name"
+    },
+    {
+      "fieldname": "printer_location",
+      "fieldtype": "Data",
+      "label": "Printer Location"
+    },
+    {
+      "fieldname": "printer_email",
+      "fieldtype": "Data",
+      "label": "Printer Email"
+    },
+    {
+      "fieldname": "printer_phone",
+      "fieldtype": "Data",
+      "label": "Printer Phone"
+    }
+  ],
+  "links": [],
+  "modified": "2026-04-18 00:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Posnext Api",
+  "name": "POS Printer",
+  "naming_rule": "Autoincrement",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 0,
+      "read": 1,
+      "role": "Sales User",
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "title_field": "printer_name",
+  "track_changes": 1
+}

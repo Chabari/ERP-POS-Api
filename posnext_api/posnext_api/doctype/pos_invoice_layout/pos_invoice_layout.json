@@ -1,0 +1,222 @@
+{
+  "actions": [],
+  "autoname": "autoincrement",
+  "creation": "2026-04-18 00:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "layout_name",
+    "warehouse",
+    "is_default",
+    "section_display_options",
+    "include_warehouse",
+    "include_location",
+    "include_kra_pin",
+    "include_landmark",
+    "include_cashier",
+    "include_company_logo",
+    "show_email",
+    "show_phone_number",
+    "include_receipt_no",
+    "section_layout_details",
+    "selected_size",
+    "invoice_aging",
+    "footer_text",
+    "paybill_number",
+    "section_company_info",
+    "logo",
+    "email",
+    "phone",
+    "location",
+    "landmark",
+    "kra",
+    "warehouse_name",
+    "invoice_warehouse"
+  ],
+  "fields": [
+    {
+      "fieldname": "layout_name",
+      "fieldtype": "Data",
+      "label": "Layout Name",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "warehouse",
+      "fieldtype": "Link",
+      "label": "Warehouse",
+      "options": "Warehouse",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "is_default",
+      "fieldtype": "Check",
+      "label": "Is Default",
+      "default": 0
+    },
+    {
+      "fieldname": "section_display_options",
+      "fieldtype": "Section Break",
+      "label": "Display Options"
+    },
+    {
+      "fieldname": "include_warehouse",
+      "fieldtype": "Check",
+      "label": "Include Warehouse",
+      "default": 1
+    },
+    {
+      "fieldname": "include_location",
+      "fieldtype": "Check",
+      "label": "Include Location",
+      "default": 1
+    },
+    {
+      "fieldname": "include_kra_pin",
+      "fieldtype": "Check",
+      "label": "Include KRA Pin",
+      "default": 0
+    },
+    {
+      "fieldname": "include_landmark",
+      "fieldtype": "Check",
+      "label": "Include Landmark",
+      "default": 0
+    },
+    {
+      "fieldname": "include_cashier",
+      "fieldtype": "Check",
+      "label": "Include Cashier",
+      "default": 1
+    },
+    {
+      "fieldname": "include_company_logo",
+      "fieldtype": "Check",
+      "label": "Include Company Logo",
+      "default": 1
+    },
+    {
+      "fieldname": "show_email",
+      "fieldtype": "Check",
+      "label": "Show Email",
+      "default": 1
+    },
+    {
+      "fieldname": "show_phone_number",
+      "fieldtype": "Check",
+      "label": "Show Phone Number",
+      "default": 1
+    },
+    {
+      "fieldname": "include_receipt_no",
+      "fieldtype": "Check",
+      "label": "Include Receipt No",
+      "default": 1
+    },
+    {
+      "fieldname": "section_layout_details",
+      "fieldtype": "Section Break",
+      "label": "Layout Details"
+    },
+    {
+      "fieldname": "selected_size",
+      "fieldtype": "Select",
+      "label": "Paper Size",
+      "options": "size1\nsize2\nsize3",
+      "default": "size2"
+    },
+    {
+      "fieldname": "invoice_aging",
+      "fieldtype": "Data",
+      "label": "Invoice Aging (days)",
+      "default": "7"
+    },
+    {
+      "fieldname": "footer_text",
+      "fieldtype": "Small Text",
+      "label": "Footer Text"
+    },
+    {
+      "fieldname": "paybill_number",
+      "fieldtype": "Data",
+      "label": "Paybill Number"
+    },
+    {
+      "fieldname": "section_company_info",
+      "fieldtype": "Section Break",
+      "label": "Company Info"
+    },
+    {
+      "fieldname": "logo",
+      "fieldtype": "Attach Image",
+      "label": "Logo"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "options": "Email"
+    },
+    {
+      "fieldname": "phone",
+      "fieldtype": "Data",
+      "label": "Phone"
+    },
+    {
+      "fieldname": "location",
+      "fieldtype": "Data",
+      "label": "Location"
+    },
+    {
+      "fieldname": "landmark",
+      "fieldtype": "Data",
+      "label": "Landmark"
+    },
+    {
+      "fieldname": "kra",
+      "fieldtype": "Data",
+      "label": "KRA Pin"
+    },
+    {
+      "fieldname": "warehouse_name",
+      "fieldtype": "Data",
+      "label": "Warehouse Name"
+    },
+    {
+      "fieldname": "invoice_warehouse",
+      "fieldtype": "Data",
+      "label": "Invoice Warehouse"
+    }
+  ],
+  "links": [],
+  "modified": "2026-04-18 00:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Posnext Api",
+  "name": "POS Invoice Layout",
+  "naming_rule": "Autoincrement",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 0,
+      "read": 1,
+      "role": "Sales User",
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "title_field": "layout_name",
+  "track_changes": 1
+}
