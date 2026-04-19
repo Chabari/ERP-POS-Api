@@ -24,6 +24,8 @@ def _wh_conditions(warehouse):
 @frappe.whitelist()
 def get_home_analytics(date=None, warehouse=None):
     """Return dashboard analytics matching the PosNext Home screen format."""
+    if not warehouse:
+        frappe.throw(_("Warehouse is required"), title=_("Missing Parameter"))
     if not date:
         date = nowdate()
 
