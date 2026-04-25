@@ -41,7 +41,7 @@ def get_receipts(warehouse=None, start_date=None, end_date=None):
             "posting_date",
             "creation",
             "modified",
-            "pos_closing_entry",
+            "posa_pos_opening_shift",
         ],
         order_by="posting_date desc, creation desc",
         limit_page_length=100,
@@ -169,6 +169,12 @@ def check_shift(warehouse=None):
     pos_profile = _get_pos_profile_for_warehouse(warehouse)
     if not pos_profile:
         return {"success": "0", "message": "No active POS Profile found"}
+    
+    customer = frappe.db.get_value(
+        "POS Profile",
+        {"name": pos_profile},
+        ["customer"],
+    )
 
     # 1. Check for an open shift created by the current user
     open_entry = frappe.db.get_value(
@@ -178,11 +184,6 @@ def check_shift(warehouse=None):
         ["name"],
     )
     if open_entry:
-        customer = frappe.db.get_value(
-            "POS Opening Shift",
-            {"name": open_entry},
-            ["customer"],
-        )
         return {"success": "1", "shift": open_entry, "customer": customer, "message": "Shift found"}
 
     # 2. Check for an open shift created by any other applicable user
@@ -195,11 +196,7 @@ def check_shift(warehouse=None):
             ["name"],
         )
         if shared_entry:
-            customer = frappe.db.get_value(
-                "POS Opening Shift",
-                {"name": shared_entry},
-                ["customer"],
-            )
+            
             return {"success": "1", "shift": shared_entry, "customer": customer,
                     "message": "Shift found"}
 
