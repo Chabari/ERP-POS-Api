@@ -283,7 +283,7 @@ def login_pin(pin=None, user_id=None):
     pos_users = frappe.get_all(
         "User",
         filters={"enabled": 1, "user_type": "System User"},
-        fields=["name", "full_name", "email", "phone"],
+        fields=["name", "full_name", "email", "phone", "ury_pos_pin"],
         order_by="full_name asc",
     )
 
@@ -292,7 +292,7 @@ def login_pin(pin=None, user_id=None):
 
     target = pos_users[user_id - 1]
 
-    stored_pin = frappe.db.get_value("User", target.name, "login_pin")
+    stored_pin = frappe.db.get_value("User", target.name, "ury_pos_pin")
     if not stored_pin or str(stored_pin) != str(pin):
         return {"success": "0", "message": "Invalid PIN"}
 
@@ -314,14 +314,13 @@ def login_pin(pin=None, user_id=None):
     # Build users list (same as refresh_session)
     users = []
     for idx, u in enumerate(pos_users, start=1):
-        u_pin = frappe.db.get_value("User", u.name, "login_pin") or ""
         users.append(
             {
                 "id": idx,
                 "name": u.full_name or u.name,
                 "username": u.name,
                 "email": u.email or "",
-                "login_pin": u_pin,
+                "login_pin": u.ury_pos_pin or "1234",
                 "selected": False,
             }
         )
@@ -513,18 +512,17 @@ def refresh_session(token=None, warehouse=None):
     pos_users = frappe.get_all(
         "User",
         filters={"enabled": 1, "user_type": "System User"},
-        fields=["name", "full_name", "email"],
+        fields=["name", "full_name", "email", "ury_pos_pin"],
         order_by="full_name asc",
     )
     for idx, u in enumerate(pos_users, start=1):
-        # pin = frappe.db.get_value("User", u.name, "login_pin") or ""
         users.append(
             {
                 "id": idx,
                 "name": u.full_name,
                 "username": u.name,
                 "email": u.email or "",
-                "login_pin": "1234",
+                "login_pin": u.ury_pos_pin or "1234",
                 "selected": False,
             }
         )

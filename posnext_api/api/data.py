@@ -68,7 +68,7 @@ def get_users():
     users = frappe.get_all(
         "User",
         filters=user_filters,
-        fields=["name", "full_name", "email", "phone", "creation"],
+        fields=["name", "full_name", "email", "phone", "creation", "ury_pos_pin"],
         order_by="full_name asc",
     )
     result = []
@@ -98,7 +98,7 @@ def get_users():
                 "isActive": 1,
                 "isPermanent": 1,
                 "id_number": "",
-                "login_pin": "1234",
+                "login_pin": u.ury_pos_pin or "1234",
                 "sales_target": "0",
                 "basic_pay": "0",
                 "overtime_pay": "0",
