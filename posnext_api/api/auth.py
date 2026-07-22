@@ -292,8 +292,14 @@ def login_pin(pin=None, user_id=None):
 
     target = pos_users[user_id - 1]
 
-    stored_pin = frappe.db.get_value("User", target.name, "ury_pos_pin")
+    # ury_pos_pin is a Password fieldtype, so it's stored encrypted in the
+    # __Auth table. frappe.db.get_value()/get_all() would only ever return
+    # the masked "*****" placeholder - it must be decrypted explicitly.
+    stored_pin = get_decrypted_password(
+        "User", target.name, fieldname="ury_pos_pin", raise_exception=False
+    )
     if not stored_pin or str(stored_pin) != str(pin):
+        # return {"success": "0", "message": "Invalid PIN"}
         return {"success": "0", "message": "Invalid PIN", "stored_pin": stored_pin, "provided_pin": pin, "target": target}
 
     user_doc = frappe.get_doc("User", target.name)
