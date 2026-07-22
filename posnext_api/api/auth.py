@@ -294,7 +294,7 @@ def login_pin(pin=None, user_id=None):
 
     stored_pin = frappe.db.get_value("User", target.name, "ury_pos_pin")
     if not stored_pin or str(stored_pin) != str(pin):
-        return {"success": "0", "message": "Invalid PIN"}
+        return {"success": "0", "message": "Invalid PIN", "stored_pin": stored_pin, "provided_pin": pin, "target": target}
 
     user_doc = frappe.get_doc("User", target.name)
     role_names = [r.role for r in user_doc.roles]
