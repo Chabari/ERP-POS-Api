@@ -476,6 +476,44 @@ def get_warehouses():
     return result
 
 
+def _build_pos_users_list():
+    """Build the cashier/user list shown on the POS login screen.
+
+    Matches PosNext's LoginUser format (id, name, login_pin) consumed by
+    both `refresh_session` and the standalone `get_pos_users` endpoint.
+    """
+    users = []
+    pos_users = frappe.get_all(
+        "User",
+        filters={"enabled": 1, "user_type": "System User"},
+        fields=["name", "full_name", "email", "ury_pos_pin"],
+        order_by="full_name asc",
+    )
+    for idx, u in enumerate(pos_users, start=1):
+        users.append(
+            {
+                "id": idx,
+                "name": u.full_name,
+                "username": u.name,
+                "email": u.email or "",
+                "login_pin": u.ury_pos_pin or "1234",
+                "selected": False,
+            }
+        )
+    return users
+
+@frappe.whitelist()
+def get_pos_users():
+    """Return the cashier/user list for the POS login (user-switch) screen.
+
+    ERPNext equivalent of Laravel's `getPosUsers` endpoint — used by the
+    tablet/web POS login flow (see AppService.getPosUsers()) so it doesn't
+    need a full `refresh_session` round trip just to list users.
+    """
+    return _build_pos_users_list()
+
+
+
 @frappe.whitelist()
 def refresh_session(token=None, warehouse=None):
     """Refresh session data — ERPNext equivalent of Laravel's refresh-new.
@@ -508,24 +546,24 @@ def refresh_session(token=None, warehouse=None):
     _rs_printer, _rs_layout = _get_printer_and_layout(warehouse)
 
     # Build users list for POS login screen (cashiers)
-    users = []
-    pos_users = frappe.get_all(
-        "User",
-        filters={"enabled": 1, "user_type": "System User"},
-        fields=["name", "full_name", "email", "ury_pos_pin"],
-        order_by="full_name asc",
-    )
-    for idx, u in enumerate(pos_users, start=1):
-        users.append(
-            {
-                "id": idx,
-                "name": u.full_name,
-                "username": u.name,
-                "email": u.email or "",
-                "login_pin": u.ury_pos_pin or "1234",
-                "selected": False,
-            }
-        )
+    users = _build_pos_users_list()
+    # pos_users = frappe.get_all(
+    #     "User",
+    #     filters={"enabled": 1, "user_type": "System User"},
+    #     fields=["name", "full_name", "email", "ury_pos_pin"],
+    #     order_by="full_name asc",
+    # )
+    # for idx, u in enumerate(pos_users, start=1):
+    #     users.append(
+    #         {
+    #             "id": idx,
+    #             "name": u.full_name,
+    #             "username": u.name,
+    #             "email": u.email or "",
+    #             "login_pin": u.ury_pos_pin or "1234",
+    #             "selected": False,
+    #         }
+    #     )
 
     return {
         "success": "1",
